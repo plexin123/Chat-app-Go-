@@ -33,7 +33,10 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.WebsocketServer) {
 	//save message
 	//get message history
 	r.GET("/message/:sender/:receiver", wsHandler.GetMessageHistory)
-
+	r.GET("message/:sender", wsHandler.GetTotalMessageHistory)
+	//1231123
+	//123123123
+	//123123
 }
 
 func Start(addr string) error {
