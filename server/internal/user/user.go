@@ -70,6 +70,7 @@ type Service interface {
 	// 	// Remove online user from redis
 	// 	RemoveOnlineUser(userID int64) error
 	// 	// Get all the users from redis set
-	// 	GetOnlineUsers() ([]string, error) //return an array of strings or error
+	GetOnlineUsers() ([]string, error) //return an array of strings or error
+
 	//
 }
