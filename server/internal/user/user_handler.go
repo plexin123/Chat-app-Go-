@@ -81,8 +81,15 @@ func (h *Handler) Logout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "logout successful"})
 }
 
-func(h *User) GetUser(c *gin.Context){
-	res ,err := 
+func (h *Handler) GetUser(c *gin.Context, id int) {
+	user, err := h.Service.GetUserById(c, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, user)
 }
 
 // func (h *Handler) getUsers(c *gin.Context) {
