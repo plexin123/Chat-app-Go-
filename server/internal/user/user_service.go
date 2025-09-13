@@ -68,6 +68,20 @@ func (s *service) CreateUser(c context.Context, req *CreateUserReq) (*CreateUser
 	return res, nil // Return the created user response
 }
 
+func (s *service) GetUserById(c context.Context, id int) (*UserRes, error) {
+	ctx, cancel := context.WithTimeout(c, s.timeout)
+	defer cancel()
+	user, err := s.Repository.GetUserById(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return &UserRes{
+		ID:       strconv.Itoa(int(user.ID)),
+		Username: user.Username,
+	}, nil
+
+}
+
 // MyJWTClaims defines custom claims for the JWT, including user ID and username.
 type MyJWTClaims struct {
 	ID       string `json:"id"`

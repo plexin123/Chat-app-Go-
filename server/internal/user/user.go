@@ -51,12 +51,19 @@ type LoginUserRes struct {
 	Username    string `json:"username"` // Username of the logged-in user
 }
 
+type UserRes struct {
+	ID       string `json:"id"`
+	Username string `json:"username"`
+}
+
 // Repository interface defines the methods for interacting with the user data store.
 type Repository interface {
 	// CreateUser inserts a new user into the data store and returns the created user.
 	CreateUser(ctx context.Context, user *User) (*User, error)
 	// GetUserByEmail retrieves a user by their email from the data store.
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
+
+	GetUserById(ctx context.Context, id int) (*User, error)
 }
 
 // Service interface defines the methods for handling user-related business logic.
@@ -65,11 +72,14 @@ type Service interface {
 	CreateUser(c context.Context, req *CreateUserReq) (*CreateUserRes, error)
 	// Login authenticates a user and returns the response structure with an access token.
 	Login(c context.Context, req *LoginUserReq) (*LoginUserRes, error)
+
+	GetUserById(c context.Context, id int) (*UserRes, error)
 	// Add online user into redis
 	// 	AddOnlineUser(userID int64) error
 	// 	// Remove online user from redis
 	// 	RemoveOnlineUser(userID int64) error
 	// 	// Get all the users from redis set
-	// 	GetOnlineUsers() ([]string, error) //return an array of strings or error
+	// GetOnlineUsers() ([]string, error) //return an array of strings or error
+
 	//
 }
