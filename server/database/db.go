@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jackc/pgx/v5"
 )
 
 type Database struct {
@@ -12,12 +12,17 @@ type Database struct {
 
 func NewDatabase() (*Database, error) {
 	//Connection to MySQL
-	dsn := "root:password@tcp(localhost:3307)/chat2-mysql?tls=false"
-	db, err := sql.Open("mysql", dsn)
+	dsn := "postgres://user:password@localhost:5432/chat2_postgres?sslmode=disable"
+	db, err := sql.Open("pgx", dsn)
 	if err != nil {
 		return nil, err
 
 	}
+
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}
+
 	return &Database{
 		db: db,
 	}, nil
